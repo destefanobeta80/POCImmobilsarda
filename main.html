@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>POC Immobilsarda</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/png" href="img/favicon.ico">
+</head>
+<body>
+    <div class="container">
+        <div class="input-section">
+            <img src="img/logo_immobilsarda.png" alt="Logo GPTSarda" style="height: 50px;">
+            <h1>GPTSarda</h1>
+            <h2>Crea contenuti da una descrizione dell'immobile</h2>            
+            <textarea id="propertyDescription" placeholder="Inserisci la descrizione dell'immobile qui..." rows="10"></textarea>
+            <div id="imageUploadSection">
+                <label for="imageUploader">Trascina qui le immagini o clicca per selezionarle</label>
+                <input type="file" multiple id="imageUploader"/>
+            </div>
+            <button id="generateDescription">Crea descrizione</button>
+            <div id="loadingIndicator" style="display: none; text-align: center;">
+                <div class="loader"></div>
+                <p>Caricamento in corso...</p>
+            </div>            
+        </div>
+        <div class="tabs-navigation tabs-navigation-hidden">
+            <button class="tab-link" onclick="changeTab(event, 'Brochure')">Brochure</button>
+            <button class="tab-link" onclick="changeTab(event, 'Web')">Web</button>
+            <button class="tab-link" onclick="changeTab(event, 'E-mail')">E-mail</button>
+            <button class="tab-link" onclick="changeTab(event, 'Idealista')">Idealista</button>
+            <button class="tab-link" onclick="changeTab(event, 'Facebook')">Facebook</button>
+        </div>      
+        <div class="output-section" id="descriptionTabs"></div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
