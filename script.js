@@ -99,7 +99,33 @@ let descriptions = {
         #PortoRafael #ВидНаМоре #Роскошь`
     }
 }
+
+let flagsContainer = document.getElementById('flags-container');
+if (!flagsContainer) {
+    flagsContainer = document.createElement('div');
+    flagsContainer.id = 'flags-container';
+    flagsContainer.innerHTML = `
+        <button class="flag-btn" onclick="changeLanguage('it')">
+            <img src="img/it.png" alt="Italian Flag">
+        </button>
+        <button class="flag-btn" onclick="changeLanguage('fr')">
+            <img src="img/fr.png" alt="French Flag">
+        </button>
+        <button class="flag-btn" onclick="changeLanguage('de')">
+            <img src="img/de.png" alt="German Flag">
+        </button>
+        <button class="flag-btn" onclick="changeLanguage('ru')">
+            <img src="img/ru.png" alt="Russian Flag">
+        </button>
+    `;
     
+    // Assicurati che questo sia fatto una sola volta al caricamento della pagina
+    document.querySelector('.container').appendChild(flagsContainer);
+}
+
+flagsContainer.style.display = 'none';
+
+
 document.getElementById('generateDescription').addEventListener('click', function() {
     // Mostra l'indicatore di caricamento
     document.getElementById('loadingIndicator').style.display = 'block';
@@ -107,6 +133,7 @@ document.getElementById('generateDescription').addEventListener('click', functio
     // Nasconde immediatamente la barra di navigazione dei tab e i contenuti dei tab
     let tabsNav = document.querySelector('.tabs-navigation');
     tabsNav.classList.add('tabs-navigation-hidden');
+    document.getElementById('flags-container').style.display = 'none';
 
     let tabContents = document.getElementsByClassName('tab-content');
     for (let i = 0; i < tabContents.length; i++) {
@@ -115,33 +142,6 @@ document.getElementById('generateDescription').addEventListener('click', functio
 
     // Simula il tempo di attesa
     setTimeout(() => {
-        /*
-        let descriptions = {
-            'Brochure': `Nel cuore di Porto Rafael, questa esclusiva villa offre viste mozzafiato e un accesso diretto alla spiaggia, fondendosi perfettamente con il paesaggio marino della Gallura.
-            
-            Con 3 camere, 6 letti e spazi ampi e luminosi, tra cui un soggiorno-pranzo con camino e cucina spaziosa, la casa garantisce un'esperienza abitativa di lusso e personalizzazione.
-            
-            Una dépendance indipendente completa la proprietà, offrendo ulteriore privacy e comfort.`,
-            'Web': `Scoprite l'incanto di Porto Rafael con questa villa fronte mare, dotata di terrazze panoramiche e accesso privato alla spiaggia.
-            
-            Con 3 camere, ampi spazi vivibili e una dépendance, rappresenta la quintessenza della vita di lusso in Sardegna.`,
-            'E-mail': `Caro [Nome],
-            
-            Ti presentiamo una proprietà eccezionale a Porto Rafael: una villa esclusiva con vista mare, accesso diretto alla spiaggia e terrazze panoramiche.
-            Con 3 camere, spazi ampi e luminosi e una dépendance, questa casa offre un'esperienza unica di comfort e lusso. Contattaci per scoprire di più su questa magica opportunità di vivere il sogno sardo.
-            
-            Cordiali saluti,
-            Immobilsarda`,
-            'Idealista': `Questa villa esclusiva a Porto Rafael, con vista mozzafiato sul mare e accesso diretto alla spiaggia, offre un'esperienza di vita lussuosa e personalizzabile.
-            
-            Dotata di 3 camere, ampi spazi vivibili, terrazze panoramiche e una dépendance, rappresenta un'opportunità unica per chi desidera vivere in uno dei luoghi più incantevoli della Sardegna.`,
-            'Facebook': `🌊💫 Immergetevi nel lusso e nella bellezza di Porto Rafael con questa villa esclusiva! Con viste mozzafiato sul mare, accesso diretto alla spiaggia e terrazze panoramiche, questa proprietà offre 3 camere, ampi spazi vivibili e una dépendance.
-            Un sogno che diventa realtà nella magica Gallura.
-            
-            #PortoRafael #VistaMare #Lusso`
-        };
-        */
-
         let tabsContainer = document.getElementById('descriptionTabs');
         tabsContainer.innerHTML = ''; // Pulizia dei contenuti precedenti
 
@@ -173,25 +173,7 @@ document.getElementById('generateDescription').addEventListener('click', functio
             copyBtn.onclick = () => copyToClipboard(copyBtn); // Assegna la funzione copyToClipboard
         }
 
-        // Crea il contenitore delle bandiere dopo i tab
-        let flagsContainer = document.createElement('div');
-        flagsContainer.id = 'flags-container'; // Aggiungi un ID per il CSS e il riferimento
-        // 🇮🇹 🇫🇷 🇩🇪 🇷🇺
-        flagsContainer.innerHTML = `
-            <button class="flag-btn" onclick="changeLanguage('it')">
-                <img src="img/it.png" alt="Italian Flag">   
-            </button>
-            <button class="flag-btn" onclick="changeLanguage('fr')">
-                <img src="img/fr.png" alt="French Flag">  
-            </button>
-            <button class="flag-btn" onclick="changeLanguage('de')">
-                <img src="img/de.png" alt="German Flag">
-            </button>
-            <button class="flag-btn" onclick="changeLanguage('ru')">
-                <img src="img/ru.png" alt="Russian Flag">  
-            </button>
-        `;
-        document.querySelector('.container').appendChild(flagsContainer); // Appendi il contenitore delle bandiere alla fine della sezione container
+        document.getElementById('flags-container').style.display = 'flex';
         
         // Mostra il contenuto del primo tab per default
         document.getElementById('Brochure').style.display = 'block';
@@ -240,7 +222,7 @@ function changeLanguage(lang) {
         let tabId = tabContents[i].id; // L'id del tab corrisponde alla chiave in `descriptions`
         let textContainer = tabContents[i].querySelector('div');
         // Assicurati che la traduzione per la lingua selezionata esista prima di tentare di sostituirla
-        if(descriptions[tabId][lang]) {
+        if (descriptions[tabId][lang]) {
             textContainer.innerHTML = descriptions[tabId][lang].replace(/\n/g, '<br>');
         } else {
             console.error('Traduzione non disponibile per la lingua: ' + lang);
